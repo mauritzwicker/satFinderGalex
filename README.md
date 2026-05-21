@@ -1,12 +1,17 @@
 # Satellite Finder in GALEX data
 
 21.05.2026
+
 @mauritz.wicker
+
 CTAO Summer School 2026
+
 La Palma, Canary Islands
 
 Project: In GALEX data we want to identify variable sources, specifically differentiate Astrophysical from Non-Astrophysical variability.
+
 Difficulties: Spiral dither pattern creates uncommon variability.
+
 Approach:
 - Bin data in RA/Dec Time
 - Searching for Variability: Deviation from “Baseline” to define candidates
