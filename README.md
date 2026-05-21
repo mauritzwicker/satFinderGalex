@@ -24,3 +24,8 @@ Approach:
 - Make assumptions:
     - Are different trails from the same source (reflection?)
     - Is a satellite in geostationary orbit?
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+Look at findSatellite.ipynb file for an example (plots) and how the code works. Data is not saved in the Repository (~700 MB).
