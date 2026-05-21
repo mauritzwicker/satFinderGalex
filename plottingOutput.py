@@ -50,6 +50,50 @@ def plotCandidates_A(resultsCandidates, overlap_results):
     plt.show()
     return(allData_final)
 
+def plotCandidates_B(resultsCandidates, overlap_results, df_flag0):
+    xvals = [resCand[0] for resCand in resultsCandidates[list(resultsCandidates.keys())[0]]]
+    yvals = [resCand[1] for resCand in resultsCandidates[list(resultsCandidates.keys())[0]]]
+    tvals = [np.mean(resCand[2]) for resCand in resultsCandidates[list(resultsCandidates.keys())[0]]]
+    all_t = np.concatenate([np.asarray(tvals)])
+    # Get global time range for this plot, so all candidates share the same color scale
+    norm = mpl.colors.Normalize(vmin=np.nanmin(all_t), vmax=np.nanmax(all_t))
+
+    allData_final = []
+
+    fig, ax = plt.subplots()
+    ax.scatter(df_flag0['ra'][::10], df_flag0['dec'][::10], s=0.001, alpha=0.05, color='gray')
+    for ky, val in resultsCandidates.items():
+        out = overlap_results[ky]
+        t_edges, ra_edges, dec_edges = out["edges"]
+        t_centers = 0.5 * (t_edges[:-1] + t_edges[1:])
+        ra_centers = 0.5 * (ra_edges[:-1] + ra_edges[1:])
+        dec_centers = 0.5 * (dec_edges[:-1] + dec_edges[1:])
+
+        for resCand in val:
+            x_i, y_i, t_i, sig_i = resCand
+            ra_i = ra_centers[x_i]
+            dec_i = dec_centers[y_i]
+            
+            sc = ax.scatter(
+                ra_i,
+                dec_i,
+                c=np.median(t_i),              # color by time
+                cmap="viridis",
+                norm=norm,
+                s=60
+            )
+            allData_final.append([ra_i, dec_i, np.mean(t_i), np.mean(sig_i)])
+
+    cbar = fig.colorbar(sc, ax=ax)
+
+    ax.set_xlabel("RA[id]")
+    ax.set_ylabel("Dec[id]")
+    ax.set_title(ky)
+
+    fig.tight_layout()
+    plt.show()
+    return
+
 # def plt_RegionCut(df_final, df_final_cand0, signalSelected, radec_cut, ratime_cut, dectime_cut, timeMin_cut, showFulLCands=True):
 #     fig, axs = plt.subplots(1, 3, figsize=(14, 5))
 #     ax = axs[0]
